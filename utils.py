@@ -5,6 +5,7 @@ import os
 import glob
 import torchvision
 from torchvision import transforms
+import numpy as np
 
 def show_example_image():
   img = cv.imread('data/images/JPCLN001.jpg', cv.IMREAD_GRAYSCALE)
@@ -72,3 +73,9 @@ def dice_loss(inputs, targets):
   dice = (2.*intersection + smooth)/(inputs.sum() + targets.sum() + smooth)  
   
   return 1 - dice
+
+def image_to_tensor(image):
+  image = image / 255.0
+  image_np = np.expand_dims(image, axis=0)
+  image_tensor = torch.tensor(image_np, dtype=torch.float32)
+  return image_tensor
